@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    pages: Page;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -89,9 +91,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     header: Header;
+    footer: Footer;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   widgets: {
@@ -168,6 +172,186 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  slug: string;
+  components?:
+    | (
+        | {
+            heading: string;
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image: number | Media;
+            ctaLabel?: string | null;
+            ctaLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            heading: string;
+            subheading?: string | null;
+            groups: {
+              label: string;
+              services: {
+                title: string;
+                description: string;
+                icon:
+                  | 'certified'
+                  | 'checkCircle'
+                  | 'deck'
+                  | 'documentCheck'
+                  | 'gutter'
+                  | 'money'
+                  | 'roof'
+                  | 'roofCleaning'
+                  | 'roofInsulation'
+                  | 'roofRepair'
+                  | 'roofReplacement'
+                  | 'shieldCheck'
+                  | 'siding'
+                  | 'smile'
+                  | 'star'
+                  | 'window';
+                image?: (number | null) | Media;
+                url?: string | null;
+                id?: string | null;
+              }[];
+              id?: string | null;
+            }[];
+            ctaLabel?: string | null;
+            ctaLink?: string | null;
+            footer?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'servicesAndMaterialsSection';
+          }
+        | {
+            title: string;
+            subtitle?: string | null;
+            cards: {
+              icon:
+                | 'certified'
+                | 'checkCircle'
+                | 'deck'
+                | 'documentCheck'
+                | 'gutter'
+                | 'money'
+                | 'roof'
+                | 'roofCleaning'
+                | 'roofInsulation'
+                | 'roofRepair'
+                | 'roofReplacement'
+                | 'shieldCheck'
+                | 'siding'
+                | 'smile'
+                | 'star'
+                | 'window';
+              title: string;
+              subtitle?: string | null;
+              /**
+               * Shows the card highlighted in gold, spanning two columns.
+               */
+              featured?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'whyUsBoxes';
+          }
+        | {
+            title: string;
+            text?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image: number | Media;
+            ctaTitle?: string | null;
+            ctaLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cardWithImageBackground';
+          }
+        | {
+            title: string;
+            subtitle?: string | null;
+            reviews: {
+              review: string;
+              name: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'reviews';
+          }
+        | {
+            title: string;
+            text?: string | null;
+            /**
+             * Google Maps embed URL (the src of the iframe from Share > Embed a map).
+             */
+            mapUrl?: string | null;
+            areas?:
+              | {
+                  name: string;
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            linkLabel?: string | null;
+            linkUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mapSection';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -197,6 +381,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -283,6 +471,119 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  components?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              image?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        servicesAndMaterialsSection?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              groups?:
+                | T
+                | {
+                    label?: T;
+                    services?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          icon?: T;
+                          image?: T;
+                          url?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              ctaLabel?: T;
+              ctaLink?: T;
+              footer?: T;
+              id?: T;
+              blockName?: T;
+            };
+        whyUsBoxes?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              cards?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    subtitle?: T;
+                    featured?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        cardWithImageBackground?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              image?: T;
+              ctaTitle?: T;
+              ctaLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        reviews?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              reviews?:
+                | T
+                | {
+                    review?: T;
+                    name?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        mapSection?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              mapUrl?: T;
+              areas?:
+                | T
+                | {
+                    name?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              linkLabel?: T;
+              linkUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -342,6 +643,30 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  offices?:
+    | {
+        address: string;
+        id?: string | null;
+      }[]
+    | null;
+  phone?: string | null;
+  email?: string | null;
+  links?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -349,6 +674,30 @@ export interface HeaderSelect<T extends boolean = true> {
   phone?: T;
   license?: T;
   navLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  offices?:
+    | T
+    | {
+        address?: T;
+        id?: T;
+      };
+  phone?: T;
+  email?: T;
+  links?:
     | T
     | {
         label?: T;
