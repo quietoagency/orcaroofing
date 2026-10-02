@@ -13,9 +13,8 @@ import LocationCards from '@/components/ui/LocationCards'
 import ServiceAreasList from '@/components/ui/ServiceAreasList'
 import ServicesAndMaterialsSection from '@/components/ui/ServicesAndMaterialsSection'
 
-export default async function Page({params}){
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  console.log(slug);
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'pages',

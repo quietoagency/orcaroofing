@@ -5,12 +5,14 @@ import Image from 'next/image'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { ArrowRight } from 'iconsax-reactjs'
 import Button from './Button'
+import type { Media } from '@/payload-types'
 
 export default function Hero({ heading, ctaLabel, description, image, ctaLink }: HeroProps)  {
+  const imageUrl = typeof image === 'object' ? (image as Media).url : null
   return (
     <section aria-label="Hero" className="relative overflow-hidden bg-charcoal xl:h-193">
       <Image
-        src={image.url}
+        src={imageUrl ?? ''}
         alt="Freshly installed red tile roof on a two-story home, seen from above"
         fill
         priority
@@ -28,7 +30,7 @@ export default function Hero({ heading, ctaLabel, description, image, ctaLink }:
         <div className="flex pt-2 xl:pt-3">
           <Button
             variant="cta"
-            href={ctaLink}
+            href={ctaLink ?? '#'}
             icon={<ArrowRight size={20} color="#ffffff" aria-hidden="true" />}
           >
             {ctaLabel}
