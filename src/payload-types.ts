@@ -344,12 +344,13 @@ export interface Page {
             blockType: 'reviews';
           }
         | {
+            variant: 'text' | 'bullets';
             title: string;
-            text?: string | null;
             /**
              * Google Maps embed URL (the src of the iframe from Share > Embed a map).
              */
             mapUrl?: string | null;
+            text?: string | null;
             areas?:
               | {
                   name: string;
@@ -359,6 +360,41 @@ export interface Page {
               | null;
             linkLabel?: string | null;
             linkUrl?: string | null;
+            bullets?:
+              | {
+                  text: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            footer?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'mapSection';
@@ -483,6 +519,22 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'locationCards';
+          }
+        | {
+            heading: string;
+            subheading?: string | null;
+            counties: {
+              name: string;
+              locations: {
+                location: string;
+                locationUrl?: string | null;
+                id?: string | null;
+              }[];
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'serviceAreasList';
           }
       )[]
     | null;
@@ -702,9 +754,10 @@ export interface PagesSelect<T extends boolean = true> {
         mapSection?:
           | T
           | {
+              variant?: T;
               title?: T;
-              text?: T;
               mapUrl?: T;
+              text?: T;
               areas?:
                 | T
                 | {
@@ -714,6 +767,13 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               linkLabel?: T;
               linkUrl?: T;
+              bullets?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              footer?: T;
               id?: T;
               blockName?: T;
             };
@@ -792,6 +852,27 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     title?: T;
                     text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        serviceAreasList?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              counties?:
+                | T
+                | {
+                    name?: T;
+                    locations?:
+                      | T
+                      | {
+                          location?: T;
+                          locationUrl?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               id?: T;

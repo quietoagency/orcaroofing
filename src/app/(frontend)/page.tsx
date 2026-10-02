@@ -10,6 +10,7 @@ import SimpleCardSection from '@/components/ui/SimpleCardSection'
 import StepsSection from '@/components/ui/StepsSection'
 import FaqSection from '@/components/ui/FaqSection'
 import LocationCards from '@/components/ui/LocationCards'
+import ServiceAreasList from '@/components/ui/ServiceAreasList'
 import ServicesAndMaterialsSection from '@/components/ui/ServicesAndMaterialsSection'
 
 export default async function HomePage(){
@@ -33,6 +34,7 @@ export default async function HomePage(){
       case 'stepsSection': return <StepsSection key={block.id} {...block} />
       case 'faqSection': return <FaqSection key={block.id} {...block} />
       case 'locationCards': return <LocationCards key={block.id} {...block} />
+      case 'serviceAreasList': return <ServiceAreasList key={block.id} {...block} />
       case 'servicesAndMaterialsSection': return <ServicesAndMaterialsSection key={block.id} {...block} />
     }
   })

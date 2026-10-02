@@ -1,10 +1,10 @@
 import type { Page } from '@/payload-types'
+import MapSectionBullets from './MapSectionBullets'
+import MapSectionText from './MapSectionText'
 
 type Props = Extract<NonNullable<Page['components']>[number], { blockType: 'mapSection' }>
 
-const linkClass = 'underline decoration-gold decoration-2 underline-offset-4'
-
-export default function MapSection({ title, text, mapUrl, areas, linkLabel, linkUrl }: Props) {
+export default function MapSection({ variant, title, mapUrl, text, areas, linkLabel, linkUrl, bullets, footer }: Props) {
   return (
     <section
       aria-label="Areas we serve"
@@ -25,27 +25,10 @@ export default function MapSection({ title, text, mapUrl, areas, linkLabel, link
         <h2 className="text-[28px] leading-9 font-semibold text-black xl:text-[34px] xl:leading-10.5">
           {title}
         </h2>
-        {text && <p className="text-base leading-6.75 text-slate">{text}</p>}
-        {areas && areas.length > 0 && (
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5">
-            {areas.map((area) => (
-              <li key={area.id} className="flex items-center gap-3">
-                <span className="size-2.5 shrink-0 rounded-full bg-gold" />
-                {area.link ? (
-                  <a href={area.link} className="text-[17px] leading-7 font-medium text-[#222]">
-                    {area.name}
-                  </a>
-                ) : (
-                  <span className="text-[17px] leading-7 font-medium text-[#222]">{area.name}</span>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-        {linkLabel && (
-          <a href={linkUrl || '#'} className={`text-base font-semibold text-black ${linkClass}`}>
-            {linkLabel}
-          </a>
+        {variant === 'bullets' ? (
+          <MapSectionBullets bullets={bullets} footer={footer} />
+        ) : (
+          <MapSectionText text={text} areas={areas} linkLabel={linkLabel} linkUrl={linkUrl} />
         )}
       </div>
     </section>
