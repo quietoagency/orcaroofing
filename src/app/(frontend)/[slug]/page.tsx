@@ -12,11 +12,13 @@ import FaqSection from '@/components/ui/FaqSection'
 import LocationCards from '@/components/ui/LocationCards'
 import ServicesAndMaterialsSection from '@/components/ui/ServicesAndMaterialsSection'
 
-export default async function HomePage(){
+export default async function Page({params}){
+  const { slug } = await params;
+  console.log(slug);
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'pages',
-    where: { slug: { equals: '/' } },
+    where: { slug: { equals: slug } },
     limit: 1,
   })
   const page = docs[0]

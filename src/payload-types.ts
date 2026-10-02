@@ -213,21 +213,30 @@ export interface Page {
                 title: string;
                 description: string;
                 icon:
+                  | 'bell'
                   | 'certified'
                   | 'checkCircle'
                   | 'deck'
                   | 'documentCheck'
+                  | 'glasses'
                   | 'gutter'
+                  | 'locationHeart'
+                  | 'meditation'
+                  | 'messages'
                   | 'money'
+                  | 'paintBrush'
+                  | 'paymentCard'
                   | 'roof'
                   | 'roofCleaning'
                   | 'roofInsulation'
                   | 'roofRepair'
                   | 'roofReplacement'
                   | 'shieldCheck'
+                  | 'shield'
                   | 'siding'
                   | 'smile'
                   | 'star'
+                  | 'stickyNote'
                   | 'window';
                 image?: (number | null) | Media;
                 url?: string | null;
@@ -261,21 +270,30 @@ export interface Page {
             subtitle?: string | null;
             cards: {
               icon:
+                | 'bell'
                 | 'certified'
                 | 'checkCircle'
                 | 'deck'
                 | 'documentCheck'
+                | 'glasses'
                 | 'gutter'
+                | 'locationHeart'
+                | 'meditation'
+                | 'messages'
                 | 'money'
+                | 'paintBrush'
+                | 'paymentCard'
                 | 'roof'
                 | 'roofCleaning'
                 | 'roofInsulation'
                 | 'roofRepair'
                 | 'roofReplacement'
                 | 'shieldCheck'
+                | 'shield'
                 | 'siding'
                 | 'smile'
                 | 'star'
+                | 'stickyNote'
                 | 'window';
               title: string;
               subtitle?: string | null;
@@ -344,6 +362,127 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'mapSection';
+          }
+        | {
+            heading: string;
+            subheading?: string | null;
+            image: number | Media;
+            items: {
+              title: string;
+              text: string;
+              id?: string | null;
+            }[];
+            ctaLabel?: string | null;
+            ctaLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'checklistWithImage';
+          }
+        | {
+            heading: string;
+            subheading?: string | null;
+            cards: {
+              icon:
+                | 'bell'
+                | 'certified'
+                | 'checkCircle'
+                | 'deck'
+                | 'documentCheck'
+                | 'glasses'
+                | 'gutter'
+                | 'locationHeart'
+                | 'meditation'
+                | 'messages'
+                | 'money'
+                | 'paintBrush'
+                | 'paymentCard'
+                | 'roof'
+                | 'roofCleaning'
+                | 'roofInsulation'
+                | 'roofRepair'
+                | 'roofReplacement'
+                | 'shieldCheck'
+                | 'shield'
+                | 'siding'
+                | 'smile'
+                | 'star'
+                | 'stickyNote'
+                | 'window';
+              title: string;
+              description?: string | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'simpleCardSection';
+          }
+        | {
+            variant: 'dark' | 'light';
+            heading: string;
+            text?: string | null;
+            image: number | Media;
+            /**
+             * Steps are numbered automatically in the order they appear.
+             */
+            steps: {
+              title: string;
+              description?: string | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'stepsSection';
+          }
+        | {
+            heading: string;
+            image: number | Media;
+            questions: {
+              question: string;
+              answer: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faqSection';
+          }
+        | {
+            text?: string | null;
+            cards: {
+              title: string;
+              text: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'locationCards';
           }
       )[]
     | null;
@@ -575,6 +714,86 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               linkLabel?: T;
               linkUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        checklistWithImage?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              image?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              ctaLabel?: T;
+              ctaLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        simpleCardSection?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              cards?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        stepsSection?:
+          | T
+          | {
+              variant?: T;
+              heading?: T;
+              text?: T;
+              image?: T;
+              steps?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        faqSection?:
+          | T
+          | {
+              heading?: T;
+              image?: T;
+              questions?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        locationCards?:
+          | T
+          | {
+              text?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

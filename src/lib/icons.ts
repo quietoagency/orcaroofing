@@ -1,9 +1,12 @@
+import { Brush2, CardPos, Glass, Messages, Notification, Shield, Stickynote } from 'iconsax-reactjs'
 import type { ComponentType, SVGProps } from 'react'
 import CheckCircleIcon from '../../public/icons/CheckCircleIcon'
 import CertifiedIcon from '../../public/icons/CertifiedIcon'
 import DeckIcon from '../../public/icons/DeckIcon'
 import DocumentCheckIcon from '../../public/icons/DocumentCheckIcon'
 import GutterIcon from '../../public/icons/GutterIcon'
+import LocationHeartIcon from '../../public/icons/LocationHeartIcon'
+import MeditationIcon from '../../public/icons/MeditationIcon'
 import MoneyIcon from '../../public/icons/MoneyIcon'
 import RoofCleaningIcon from '../../public/icons/RoofCleaningIcon'
 import RoofIcon from '../../public/icons/RoofIcon'
@@ -26,21 +29,30 @@ import XIcon from '../../public/icons/XIcon'
 type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>
 
 export const icons = {
+  bell: Notification,
   certified: CertifiedIcon,
   checkCircle: CheckCircleIcon,
   deck: DeckIcon,
   documentCheck: DocumentCheckIcon,
+  glasses: Glass,
   gutter: GutterIcon,
+  locationHeart: LocationHeartIcon,
+  meditation: MeditationIcon,
+  messages: Messages,
   money: MoneyIcon,
+  paintBrush: Brush2,
+  paymentCard: CardPos,
   roof: RoofIcon,
   roofCleaning: RoofCleaningIcon,
   roofInsulation: RoofInsulationIcon,
   roofRepair: RoofRepairIcon,
   roofReplacement: RoofReplacementIcon,
   shieldCheck: ShieldCheckIcon,
+  shield: Shield,
   siding: SidingIcon,
   smile: SmileIcon,
   star: StarIcon,
+  stickyNote: Stickynote,
   window: WindowIcon,
 } satisfies Record<string, IconComponent>
 
