@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
 
     return webpackConfig
   },
+  experimental: {
+    cpus: 1,
+    webpackMemoryOptimizations: true,
+  },
   turbopack: {
     root: path.resolve(dirname),
   },
