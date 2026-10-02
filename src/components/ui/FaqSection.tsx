@@ -3,7 +3,13 @@ import { ArrowDown2 } from 'iconsax-reactjs'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Page } from '@/payload-types'
 
-type Props = Extract<NonNullable<Page['components']>[number], { blockType: 'faqSection' }>
+type PageFaq = Extract<NonNullable<Page['components']>[number], { blockType: 'faqSection' }>
+
+type Props = {
+  heading: string
+  image?: PageFaq['image'] | null
+  questions: (Pick<PageFaq['questions'][number], 'question' | 'answer'> & { id?: string | null })[]
+}
 
 export default function FaqSection({ heading, image, questions }: Props) {
   const media = typeof image === 'object' ? image : null

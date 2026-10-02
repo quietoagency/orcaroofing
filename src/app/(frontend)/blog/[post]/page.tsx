@@ -5,6 +5,8 @@ import BlogRichText from '@/components/BlogRichText'
 import InThisArticle from '@/components/ui/InThisArticle'
 import PostHeader from '@/components/ui/PostHeader'
 import BlogCta from '@/components/ui/BlogCta'
+import SimilarPosts from '@/components/ui/SimilarPosts'
+import FaqSection from '@/components/ui/FaqSection'
 import { getHeadings } from '@/lib/getHeadings'
 
 export default async function BlogPostPage({ params }: { params: Promise<{ post: string }> }) {
@@ -24,8 +26,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ post:
         <article className="prose max-w-none">
           <BlogRichText data={post.content} />
         </article>
-        <aside className="flex flex-col gap-6 xl:sticky xl:top-8 xl:self-start">
-          <InThisArticle headings={getHeadings(post.content)} />
+        <aside className="max-xl:contents xl:sticky xl:top-8 xl:flex xl:flex-col xl:gap-6 xl:self-start">
+          <div className="max-xl:order-first empty:hidden">
+            <InThisArticle headings={getHeadings(post.content)} />
+          </div>
           <BlogCta
             heading={post.cta?.heading || undefined}
             description={post.cta?.description || undefined}
@@ -34,6 +38,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ post:
           />
         </aside>
       </div>
+      {post.postFaq?.title && !!post.postFaq.questions?.length && (
+        <FaqSection
+          heading={post.postFaq.title}
+          image={post.postFaq.image}
+          questions={post.postFaq.questions}
+        />
+      )}
+      <SimilarPosts currentId={post.id} category={post.category} />
     </>
   )
 }

@@ -5,14 +5,16 @@ import Link from 'next/link'
 import { useState } from 'react'
 import Button from '../ui/Button'
 import { Call, CloseCircle, HamburgerMenu, ShieldTick } from 'iconsax-reactjs'
-import type { Header as HeaderData } from '@/payload-types'
+import type { Header as HeaderData, SiteSetting } from '@/payload-types'
 
 interface HeaderProps {
   data: HeaderData
+  settings: SiteSetting
 }
 
-export function Header({ data }: HeaderProps) {
-  const { phone, license, logo, navLinks } = data
+export function Header({ data, settings }: HeaderProps) {
+  const { logo, navLinks } = data
+  const { phone, license } = settings
   const logoMedia = typeof logo === 'object' ? logo : null
   const [open, setOpen] = useState(false)
   const MenuIcon = open ? CloseCircle : HamburgerMenu

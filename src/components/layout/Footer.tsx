@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'iconsax-reactjs'
-import type { Footer as FooterData, Media } from '@/payload-types'
+import type { Footer as FooterData, SiteSetting, Media } from '@/payload-types'
 import { socialIcons } from '@/lib/icons'
 
 interface FooterProps {
   data: FooterData
+  settings: SiteSetting
   logo: Media | null
 }
 
@@ -24,8 +25,9 @@ const SOCIALS = [
 
 const headingClass = 'text-xs font-semibold tracking-[0.16em] text-slate uppercase'
 
-export function Footer({ data, logo }: FooterProps) {
-  const { offices, phone, email, links } = data
+export function Footer({ data, settings, logo }: FooterProps) {
+  const { links } = data
+  const { offices, phone, email } = settings
 
   return (
     <footer className="flex flex-col border-t border-sand bg-[#f6f2ec]">

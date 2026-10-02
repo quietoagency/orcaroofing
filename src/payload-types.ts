@@ -94,10 +94,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    siteSettings: SiteSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -543,6 +545,14 @@ export interface Page {
             blockName?: string | null;
             blockType: 'blogPostsList';
           }
+        | {
+            heading: string;
+            description?: string | null;
+            image: number | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contactSection';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -579,6 +589,31 @@ export interface Post {
     description?: string | null;
     ctaLabel?: string | null;
     ctaLink?: string | null;
+  };
+  postFaq?: {
+    title?: string | null;
+    image?: (number | null) | Media;
+    questions?:
+      | {
+          question: string;
+          answer: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+          id?: string | null;
+        }[]
+      | null;
   };
   category?: ('Roofing' | 'Decks') | null;
   updatedAt: string;
@@ -931,6 +966,15 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        contactSection?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -953,6 +997,19 @@ export interface PostsSelect<T extends boolean = true> {
         description?: T;
         ctaLabel?: T;
         ctaLink?: T;
+      };
+  postFaq?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        questions?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
       };
   category?: T;
   updatedAt?: T;
@@ -1005,8 +1062,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Header {
   id: number;
   logo?: (number | null) | Media;
-  phone?: string | null;
-  license?: string | null;
   navLinks?:
     | {
         label: string;
@@ -1023,14 +1078,6 @@ export interface Header {
  */
 export interface Footer {
   id: number;
-  offices?:
-    | {
-        address: string;
-        id?: string | null;
-      }[]
-    | null;
-  phone?: string | null;
-  email?: string | null;
   links?:
     | {
         label: string;
@@ -1043,12 +1090,28 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings".
+ */
+export interface SiteSetting {
+  id: number;
+  phone?: string | null;
+  email?: string | null;
+  license?: string | null;
+  offices?:
+    | {
+        address: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
   logo?: T;
-  phone?: T;
-  license?: T;
   navLinks?:
     | T
     | {
@@ -1065,19 +1128,29 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  offices?:
-    | T
-    | {
-        address?: T;
-        id?: T;
-      };
-  phone?: T;
-  email?: T;
   links?:
     | T
     | {
         label?: T;
         href?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  phone?: T;
+  email?: T;
+  license?: T;
+  offices?:
+    | T
+    | {
+        address?: T;
         id?: T;
       };
   updatedAt?: T;

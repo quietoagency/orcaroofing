@@ -11,6 +11,7 @@ import { FaqSectionBlock } from "@/blocks/FaqSection";
 import { LocationCardsBlock } from "@/blocks/LocationCards";
 import { ServiceAreasListBlock } from "@/blocks/ServiceAreasList";
 import { BlogPostsListBlock } from "@/blocks/BlogPostsList";
+import { ContactSectionBlock } from "@/blocks/ContactSection";
 import { CollectionConfig } from "payload";
 
 export const Pages: CollectionConfig = {
@@ -18,6 +19,6 @@ export const Pages: CollectionConfig = {
   fields:[
     {name:'title', type: 'text', required: true},
     {name: 'slug', type: 'text', required: true, unique: true, index: true },
-    {name: 'components', type: 'blocks', blocks:[HeroBlock, ServicesAndMaterialsSectionBlock, WhyUsBoxesBlock, CardWithImageBackgroundBlock, ReviewsBlock, MapSectionBlock, ChecklistWithImageBlock, SimpleCardSectionBlock, StepsSectionBlock, FaqSectionBlock, LocationCardsBlock, ServiceAreasListBlock, BlogPostsListBlock]}
+    {name: 'components', type: 'blocks', blocks:[HeroBlock, ServicesAndMaterialsSectionBlock, WhyUsBoxesBlock, CardWithImageBackgroundBlock, ReviewsBlock, MapSectionBlock, ChecklistWithImageBlock, SimpleCardSectionBlock, StepsSectionBlock, FaqSectionBlock, LocationCardsBlock, ServiceAreasListBlock, BlogPostsListBlock, ContactSectionBlock]}
   ]
 }

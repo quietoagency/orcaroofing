@@ -35,6 +35,23 @@ export const Posts: CollectionConfig = {
         { name: 'ctaLink', type: 'text' },
       ],
     },
+    {
+      name: 'postFaq',
+      type: 'group',
+      label: 'FAQ',
+      fields: [
+        { name: 'title', type: 'text' },
+        { name: 'image', type: 'upload', relationTo: 'media' },
+        {
+          name: 'questions',
+          type: 'array',
+          fields: [
+            { name: 'question', type: 'text', required: true },
+            { name: 'answer', type: 'richText', required: true },
+          ],
+        },
+      ],
+    },
     {name: 'category', type: 'select', options: ['Roofing', 'Decks']}
   ],
 }

@@ -11,6 +11,7 @@ import FaqSection from '@/components/ui/FaqSection'
 import LocationCards from '@/components/ui/LocationCards'
 import ServiceAreasList from '@/components/ui/ServiceAreasList'
 import BlogPostsList from '@/components/ui/BlogPostsList'
+import ContactSection from '@/components/ui/ContactSection'
 import ServicesAndMaterialsSection from '@/components/ui/ServicesAndMaterialsSection'
 
 type Props = {
@@ -33,6 +34,7 @@ export default function RenderBlocks({ blocks, searchParams }: Props) {
       case 'locationCards': return <LocationCards key={block.id} {...block} />
       case 'serviceAreasList': return <ServiceAreasList key={block.id} {...block} />
       case 'blogPostsList': return <BlogPostsList key={block.id} q={searchParams?.q} />
+      case 'contactSection': return <ContactSection key={block.id} {...block} />
       case 'servicesAndMaterialsSection': return <ServicesAndMaterialsSection key={block.id} {...block} />
     }
   })

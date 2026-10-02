@@ -9,6 +9,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
+import { SiteSettings } from './globals/SiteSettings'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 
@@ -24,7 +25,7 @@ export default buildConfig({
   },
   collections: [Users, Media, Pages, Posts],
   editor: lexicalEditor(),
-  globals: [Header, Footer],
+  globals: [Header, Footer, SiteSettings],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
