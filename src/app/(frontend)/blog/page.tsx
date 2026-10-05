@@ -14,3 +14,5 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   if (!page) return;
   return <RenderBlocks blocks={page.components} searchParams={{ q }} />
 }
+
+export const dynamic = 'force-dynamic'

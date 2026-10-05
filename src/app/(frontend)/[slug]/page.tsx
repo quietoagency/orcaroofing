@@ -15,3 +15,5 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   if (!page) return;
   return <RenderBlocks blocks={page.components} />
 }
+
+export const dynamic = 'force-dynamic'

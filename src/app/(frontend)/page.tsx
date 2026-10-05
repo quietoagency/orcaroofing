@@ -13,3 +13,5 @@ export default async function HomePage(){
   if (!page) return;
   return <RenderBlocks blocks={page.components} />
 }
+
+export const dynamic = 'force-dynamic'

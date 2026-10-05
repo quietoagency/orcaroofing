@@ -49,3 +49,5 @@ export default async function BlogPostPage({ params }: { params: Promise<{ post:
     </>
   )
 }
+
+export const dynamic = 'force-dynamic'
