@@ -14,7 +14,6 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    // En prod apunta fuera de la carpeta de la release (hbuilds/versions/<id>), que se reemplaza en cada deploy
     staticDir: process.env.MEDIA_DIR || path.resolve(process.cwd(), 'media'),
   },
 }
