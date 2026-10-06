@@ -13,12 +13,24 @@ import { ServiceAreasListBlock } from "@/blocks/ServiceAreasList";
 import { BlogPostsListBlock } from "@/blocks/BlogPostsList";
 import { ContactSectionBlock } from "@/blocks/ContactSection";
 import { CollectionConfig } from "payload";
+import { seoField } from "@/fields/seo";
+import { redirectOnSlugChange, rememberPublishedSlug } from "@/hooks/redirectOnSlugChange";
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  admin: {
+    useAsTitle: 'title',
+    preview: ({ slug }) => `/api/preview?path=${encodeURIComponent(slug === '/' ? '/' : `/${slug}`)}`,
+  },
+  versions: { drafts: true, maxPerDoc: 25 },
+  hooks: {
+    beforeChange: [rememberPublishedSlug],
+    afterChange: [redirectOnSlugChange((slug) => (slug === '/' ? '/' : `/${slug}`))],
+  },
   fields:[
     {name:'title', type: 'text', required: true},
     {name: 'slug', type: 'text', required: true, unique: true, index: true },
-    {name: 'components', type: 'blocks', blocks:[HeroBlock, ServicesAndMaterialsSectionBlock, WhyUsBoxesBlock, CardWithImageBackgroundBlock, ReviewsBlock, MapSectionBlock, ChecklistWithImageBlock, SimpleCardSectionBlock, StepsSectionBlock, FaqSectionBlock, LocationCardsBlock, ServiceAreasListBlock, BlogPostsListBlock, ContactSectionBlock]}
+    {name: 'components', type: 'blocks', blocks:[HeroBlock, ServicesAndMaterialsSectionBlock, WhyUsBoxesBlock, CardWithImageBackgroundBlock, ReviewsBlock, MapSectionBlock, ChecklistWithImageBlock, SimpleCardSectionBlock, StepsSectionBlock, FaqSectionBlock, LocationCardsBlock, ServiceAreasListBlock, BlogPostsListBlock, ContactSectionBlock]},
+    seoField,
   ]
 }

@@ -14,13 +14,13 @@ const DESCRIPTION =
   'Our mission is to deliver unmatched roofing and exterior services to the Pacific Northwest.'
 
 const SOCIALS = [
-  { platform: 'facebook', label: 'Facebook', url: '#' },
-  { platform: 'tiktok', label: 'TikTok', url: '#' },
-  { platform: 'youtube', label: 'YouTube', url: '#' },
-  { platform: 'instagram', label: 'Instagram', url: '#' },
-  { platform: 'yelp', label: 'Yelp', url: '#' },
-  { platform: 'linkedin', label: 'LinkedIn', url: '#' },
-  { platform: 'x', label: 'X', url: '#' },
+  { platform: 'facebook', label: 'Facebook', url: 'https://www.facebook.com/OrcaRoofingandExteriors/' },
+  { platform: 'tiktok', label: 'TikTok', url: 'https://www.tiktok.com/@orcaroofing' },
+  { platform: 'youtube', label: 'YouTube', url: 'https://youtube.com/@OrcaRoofingExteriors?feature=shared' },
+  { platform: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/orcaroofing/' },
+  { platform: 'yelp', label: 'Yelp', url: 'https://www.yelp.com/biz/orca-roofing-and-exteriors-bellevue-2' },
+  { platform: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/company/orca-roofing/' },
+  { platform: 'x', label: 'X', url: 'https://twitter.com/orcaroofing' },
 ] as const
 
 const headingClass = 'text-xs font-semibold tracking-[0.16em] text-slate uppercase'

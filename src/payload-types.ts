@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     pages: Page;
     posts: Post;
+    redirects: Redirect;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -173,6 +175,16 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    og?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -555,8 +567,68 @@ export interface Page {
           }
       )[]
     | null;
+  /**
+   * What Google and social networks show. If a field is left empty, the page title or the default from Site Settings is used.
+   */
+  seo?: {
+    /**
+     * Title shown on Google. Ideal: up to 60 characters, with the main keyword first.
+     */
+    title?: string | null;
+    /**
+     * Summary shown under the title on Google. Ideal: between 120 and 160 characters.
+     */
+    description?: string | null;
+    /**
+     * If empty, the Meta title is used.
+     */
+    ogTitle?: string | null;
+    /**
+     * If empty, the Meta description is used.
+     */
+    ogDescription?: string | null;
+    /**
+     * Image shown when the link is shared. Recommended: 1200×630 px. If empty, the default image is used.
+     */
+    ogImage?: (number | null) | Media;
+    ogType?: ('website' | 'article') | null;
+    /**
+     * Google will not show this page in search results. It is also left out of the sitemap.
+     */
+    noIndex?: boolean | null;
+    noFollow?: boolean | null;
+    /**
+     * Only if this page duplicates another one. Leave empty to use this page's own URL.
+     */
+    canonicalUrl?: string | null;
+    /**
+     * schema.org scripts for this page (LocalBusiness, FAQPage, Service, etc.). Paste the JSON without the <script> tags.
+     */
+    jsonLd?:
+      | {
+          /**
+           * Internal name to identify it (e.g. "LocalBusiness Bellevue").
+           */
+          label: string;
+          /**
+           * Valid JSON. If the JSON is malformed it cannot be saved.
+           */
+          schema:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -616,6 +688,86 @@ export interface Post {
       | null;
   };
   category?: ('Roofing' | 'Decks') | null;
+  /**
+   * What Google and social networks show. If a field is left empty, the page title or the default from Site Settings is used.
+   */
+  seo?: {
+    /**
+     * Title shown on Google. Ideal: up to 60 characters, with the main keyword first.
+     */
+    title?: string | null;
+    /**
+     * Summary shown under the title on Google. Ideal: between 120 and 160 characters.
+     */
+    description?: string | null;
+    /**
+     * If empty, the Meta title is used.
+     */
+    ogTitle?: string | null;
+    /**
+     * If empty, the Meta description is used.
+     */
+    ogDescription?: string | null;
+    /**
+     * Image shown when the link is shared. Recommended: 1200×630 px. If empty, the default image is used.
+     */
+    ogImage?: (number | null) | Media;
+    ogType?: ('website' | 'article') | null;
+    /**
+     * Google will not show this page in search results. It is also left out of the sitemap.
+     */
+    noIndex?: boolean | null;
+    noFollow?: boolean | null;
+    /**
+     * Only if this page duplicates another one. Leave empty to use this page's own URL.
+     */
+    canonicalUrl?: string | null;
+    /**
+     * schema.org scripts for this page (LocalBusiness, FAQPage, Service, etc.). Paste the JSON without the <script> tags.
+     */
+    jsonLd?:
+      | {
+          /**
+           * Internal name to identify it (e.g. "LocalBusiness Bellevue").
+           */
+          label: string;
+          /**
+           * Valid JSON. If the JSON is malformed it cannot be saved.
+           */
+          schema:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * 301/302 redirects. They are created automatically when the slug of a page or post changes.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: number;
+  /**
+   * Old path, e.g. /roofing-seattle
+   */
+  from: string;
+  /**
+   * New path (/roofing/seattle) or full URL (https://...)
+   */
+  to: string;
+  type: '301' | '302';
   updatedAt: string;
   createdAt: string;
 }
@@ -658,6 +810,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'redirects';
+        value: number | Redirect;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -741,6 +897,20 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        og?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -976,8 +1146,29 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
+        ogType?: T;
+        noIndex?: T;
+        noFollow?: T;
+        canonicalUrl?: T;
+        jsonLd?:
+          | T
+          | {
+              label?: T;
+              schema?: T;
+              id?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1012,6 +1203,38 @@ export interface PostsSelect<T extends boolean = true> {
             };
       };
   category?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
+        ogType?: T;
+        noIndex?: T;
+        noFollow?: T;
+        canonicalUrl?: T;
+        jsonLd?:
+          | T
+          | {
+              label?: T;
+              schema?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects_select".
+ */
+export interface RedirectsSelect<T extends boolean = true> {
+  from?: T;
+  to?: T;
+  type?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1103,6 +1326,46 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Values used when a page leaves its own SEO field empty.
+   */
+  seo?: {
+    /**
+     * Production domain without a trailing slash, e.g. https://www.orcaroofing.com
+     */
+    siteUrl?: string | null;
+    /**
+     * e.g. Orca Roofing & Exteriors
+     */
+    siteName?: string | null;
+    /**
+     * Added at the end of every title. e.g. " | Orca Roofing"
+     */
+    titleSuffix?: string | null;
+    defaultDescription?: string | null;
+    defaultOgImage?: (number | null) | Media;
+    /**
+     * e.g. @orcaroofing
+     */
+    twitterHandle?: string | null;
+  };
+  /**
+   * Leave empty whatever you don't use: only tools with an ID are loaded.
+   */
+  tracking?: {
+    /**
+     * e.g. GTM-XXXXXXX
+     */
+    gtmId?: string | null;
+    /**
+     * e.g. G-XXXXXXXXXX
+     */
+    gaId?: string | null;
+    /**
+     * Numbers only
+     */
+    metaPixelId?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1152,6 +1415,23 @@ export interface SiteSettingsSelect<T extends boolean = true> {
     | {
         address?: T;
         id?: T;
+      };
+  seo?:
+    | T
+    | {
+        siteUrl?: T;
+        siteName?: T;
+        titleSuffix?: T;
+        defaultDescription?: T;
+        defaultOgImage?: T;
+        twitterHandle?: T;
+      };
+  tracking?:
+    | T
+    | {
+        gtmId?: T;
+        gaId?: T;
+        metaPixelId?: T;
       };
   updatedAt?: T;
   createdAt?: T;

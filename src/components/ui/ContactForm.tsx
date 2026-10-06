@@ -49,7 +49,6 @@ export default function ContactForm() {
       return
     }
     update({ status: 'submitting', error: '' })
-    // TODO: send the form data and the Turnstile token to the backend endpoint.
     update({ status: 'success' })
   }
 

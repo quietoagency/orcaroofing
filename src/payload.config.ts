@@ -12,6 +12,7 @@ import { Footer } from './globals/Footer'
 import { SiteSettings } from './globals/SiteSettings'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { Redirects } from './collections/Redirects'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages, Posts],
+  collections: [Users, Media, Pages, Posts, Redirects],
   editor: lexicalEditor(),
   globals: [Header, Footer, SiteSettings],
   secret: process.env.PAYLOAD_SECRET || '',

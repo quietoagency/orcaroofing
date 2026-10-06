@@ -6,8 +6,6 @@ import StepsPath from './StepsPath'
 type Props = Extract<NonNullable<Page['components']>[number], { blockType: 'stepsSection' }>
 type Variant = NonNullable<Props['variant']>
 
-// Desktop layout: a snake of two columns drawn in a 680px-wide box.
-// Geometry per variant: the light one has taller rows (longer descriptions) and rounded corners.
 const WIDTH = 680
 const ITEM_WIDTH = 230
 const CENTER = WIDTH / 2

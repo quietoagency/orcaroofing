@@ -58,7 +58,6 @@ export const icons = {
 
 export type IconName = keyof typeof icons
 
-// 'roofReplacement' -> 'Roof Replacement'
 const toLabel = (name: string) =>
   name.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase())
 
