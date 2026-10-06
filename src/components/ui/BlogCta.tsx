@@ -9,10 +9,10 @@ type Props = {
 }
 
 export default function BlogCta({
-  heading = 'Planning a Trex deck?',
-  description = 'Get a free, fully itemized estimate from our local deck team.',
-  ctaLabel = 'Contact Us',
-  ctaHref = '/contact',
+  heading,
+  description,
+  ctaLabel,
+  ctaHref = '/contact-us',
 }: Props) {
   return (
     <aside aria-label={heading} className="flex flex-col gap-4 bg-charcoal p-6 xl:p-7">

@@ -31,7 +31,7 @@ export const ServicesAndMaterialsSectionBlock: Block = {
       ],
     },
     { name: 'ctaLabel', type: 'text', defaultValue: 'Contact Us' },
-    { name: 'ctaLink', type: 'text', defaultValue: '#' },
+    { name: 'ctaLink', type: 'text', defaultValue: '/contact-us' },
     { name: 'footer', type: 'richText' },
   ],
 }
