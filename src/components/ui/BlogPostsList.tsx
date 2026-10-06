@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { publishedQuery } from '@/lib/published'
 import FeaturedPost from './FeaturedPost'
 import BlogSearchBar from './BlogSearchBar'
 import BlogPostCard from './BlogPostCard'
@@ -10,19 +11,16 @@ type Props = {
 
 export default async function BlogPostsList({ q }: Props) {
   const payload = await getPayload({ config })
+  const { draft, where } = await publishedQuery(
+    q ? { or: [{ title: { like: q } }, { excerpt: { like: q } }] } : undefined,
+  )
   const { docs: posts } = await payload.find({
     collection: 'posts',
     sort: '-publishedAt',
     limit: 0,
     pagination: false,
-    where: q
-      ? {
-          or: [
-            { title: { like: q } },
-            { excerpt: { like: q } },
-          ],
-        }
-      : undefined,
+    draft,
+    where,
   })
 
   const featured = q ? undefined : posts[0]

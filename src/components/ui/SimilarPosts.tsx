@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { publishedQuery } from '@/lib/published'
 import { ArrowRight } from 'iconsax-reactjs'
 import BlogPostCard from './BlogPostCard'
 
@@ -12,14 +13,16 @@ export default async function SimilarPosts({ currentId, category }: Props) {
   if (!category) return null
 
   const payload = await getPayload({ config })
+  const { draft, where } = await publishedQuery({
+    and: [{ category: { equals: category } }, { id: { not_equals: currentId } }],
+  })
   const { docs: posts } = await payload.find({
     collection: 'posts',
     sort: '-publishedAt',
     limit: 4,
     pagination: false,
-    where: {
-      and: [{ category: { equals: category } }, { id: { not_equals: currentId } }],
-    },
+    draft,
+    where,
   })
 
   if (posts.length === 0) return null

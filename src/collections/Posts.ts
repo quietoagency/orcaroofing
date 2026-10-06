@@ -1,14 +1,22 @@
 import type { CollectionConfig } from 'payload'
 import { lexicalEditor, BlocksFeature, EXPERIMENTAL_TableFeature } from '@payloadcms/richtext-lexical'
 import { KeyTakeawaysBlock } from '@/blocks/KeyTakeaways'
+import { seoField } from '@/fields/seo'
+import { redirectOnSlugChange, rememberPublishedSlug } from '@/hooks/redirectOnSlugChange'
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
     useAsTitle: 'title',
+    preview: ({ slug }) => `/api/preview?path=${encodeURIComponent(`/blog/${slug}`)}`,
+  },
+  versions: { drafts: true, maxPerDoc: 25 },
+  hooks: {
+    beforeChange: [rememberPublishedSlug],
+    afterChange: [redirectOnSlugChange((slug) => `/blog/${slug}`)],
   },
   fields: [
     {name: 'title', type: 'text', required: true},
-    {name: 'slug', type: 'text', required: true},
+    {name: 'slug', type: 'text', required: true, unique: true, index: true},
     {
       name: 'content',
       type: 'richText',
@@ -52,6 +60,7 @@ export const Posts: CollectionConfig = {
         },
       ],
     },
-    {name: 'category', type: 'select', options: ['Roofing', 'Decks']}
+    {name: 'category', type: 'select', options: ['Roofing', 'Decks']},
+    seoField,
   ],
 }

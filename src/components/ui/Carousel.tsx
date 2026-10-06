@@ -15,8 +15,6 @@ export default function Carousel({ slides, loop = true }: Props) {
   const [viewportRef, emblaApi] = useEmblaCarousel({ loop, dragFree: true }, [
     AutoScroll({ speed: 0.8, startDelay: 0, stopOnInteraction: false, stopOnMouseEnter: true }),
   ])
-  // Embla silently disables loop when the slides don't fill the viewport, which stops the
-  // autoscroll at the end. In that case we repeat the slides until the loop can work.
   const [copies, setCopies] = useState(1)
 
   useEffect(() => {

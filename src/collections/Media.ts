@@ -14,6 +14,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
+    imageSizes: [{ name: 'og', width: 1200, height: 630, fit: 'cover' }],
     staticDir: process.env.MEDIA_DIR || path.resolve(process.cwd(), 'media'),
   },
 }
