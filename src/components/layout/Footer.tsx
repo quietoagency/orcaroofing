@@ -114,7 +114,7 @@ export function Footer({ data, settings, logo }: FooterProps) {
         </div>
       </div>
 
-      <div className="relative mt-auto aspect-[24/5] w-full overflow-hidden">
+      <div className="relative mt-auto aspect-24/5 w-full overflow-hidden">
         <Image
           src="/images/seattle-skyline.svg"
           alt="Hand-drawn black and white sketch of the Seattle skyline with the Space Needle, Pike Place Market sign, the Great Wheel, a ferry and an orca tail in Elliott Bay"

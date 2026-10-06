@@ -28,6 +28,8 @@
     "@tailwindcss/typography": "^0.5.20",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
+    "embla-carousel-auto-scroll": "8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "graphql": "^16.8.1",
     "iconsax-reactjs": "^0.0.8",
     "next": "16.3.3",
